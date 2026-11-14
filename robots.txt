@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gdw42tjht6-png.github.io/morita-homepage/sitemap.xml
