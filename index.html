@@ -2041,6 +2041,105 @@
         .area-band { margin-top: 120px; padding: 96px 20px 88px; }
         .area-prefs li { padding: 2px 20px; }
       }
+
+      /* ===== 最終調整：高級感のあるシンプルさへ =====
+         色は増やさず、生成り・墨・藍の気配のまま。
+         余白を広げ、字間と行間を整え、罫は細い直線だけに。
+         写真は静かに、ボタンは控えめに佇むように整える。 */
+      body { line-height: 2.2; letter-spacing: .06em; }
+      section { padding-top: 232px; }
+      #services { padding-top: 200px; }
+      #profile { padding-top: 200px; }
+      #contact { padding-top: 264px; }
+      .sec-head { margin-bottom: 84px; }
+      .sec-head h2 { letter-spacing: .18em; line-height: 1.55; }
+      .sec-head .en { letter-spacing: .58em; margin-bottom: 26px; }
+      .sec-head .rule { width: 72px; opacity: .55; margin-top: 34px; }
+      .sec-num { opacity: .22; margin-bottom: 24px; }
+      .lead { line-height: 2.55; }
+      .hero-corp { letter-spacing: .68em; text-indent: .68em; }
+      .hero-name { letter-spacing: .11em; text-indent: .11em; }
+      .hero-mark .hero-line { width: clamp(44px, 5vw, 68px); opacity: .85; margin-top: clamp(34px, 3.6vw, 46px); }
+      .hero-caption { margin-top: 52px; letter-spacing: .38em; }
+      header { padding-top: 92px; }
+      .masthead { padding-bottom: 46px; border-bottom-color: var(--line-soft); }
+      .site-name-sub { letter-spacing: .46em; margin-top: 14px; }
+      nav a { letter-spacing: .3em; }
+      .inquiries { padding-top: 148px; }
+      .inq-row { padding: 36px 10px; }
+      .inq-q { letter-spacing: .1em; line-height: 1.8; }
+      .services li { padding: 62px 6px; }
+      .services li:first-child { padding-top: 62px; }
+      .services h3 { letter-spacing: .22em; line-height: 1.6; }
+      .services p { line-height: 2.35; }
+      .services li:last-child {
+        padding: 56px 44px 50px;
+        border-color: var(--line-soft);
+        margin-top: 48px;
+      }
+      .sim { margin-top: 120px; padding-top: 80px; border-top-color: var(--line); }
+      .sim h3 { letter-spacing: .14em; line-height: 1.7; margin-bottom: 28px; }
+      .sim p { line-height: 2.4; }
+      .sim .btn {
+        min-height: 58px;
+        margin-top: 46px;
+        padding: 12px 52px;
+        letter-spacing: .38em;
+        text-indent: .38em;
+        transition: background .5s ease, color .5s ease;
+      }
+      .submit {
+        min-height: 60px;
+        min-width: 264px;
+        padding: 14px 52px;
+        letter-spacing: .4em;
+        text-indent: .4em;
+        transition: background .5s ease, color .5s ease;
+      }
+      .companion-start {
+        letter-spacing: .3em;
+        text-indent: .3em;
+        transition: background .5s ease, color .5s ease;
+      }
+      .profile .row { padding: 29px 6px; }
+      .profile dt { letter-spacing: .28em; }
+      .form-intro { margin-bottom: 96px; }
+      .field { margin-bottom: 62px; }
+      .field label { letter-spacing: .36em; margin-bottom: 14px; }
+      .area-band { margin-top: 192px; padding: 144px 24px 136px; }
+      .area-en { letter-spacing: .58em; text-indent: .58em; margin-bottom: 40px; }
+      .area-note { line-height: 2.35; margin-top: 52px; }
+      footer { margin-top: 240px; padding-top: 88px; }
+      /* 写真は額を張らず、静かに置く：彩度をわずかに落とし、溶け際を柔らかく */
+      .hero-frame > img { filter: saturate(.92) contrast(1.02); }
+      .site-photo img { opacity: .7; }
+      .svc-photo img { opacity: .74; }
+      .duo .frame { border-color: var(--line-soft); padding: 8px; }
+      /* あんこの専用枠は、硬い影を落として柔らかな影へ */
+      .companion {
+        border: 1px solid var(--line);
+        box-shadow: 0 24px 48px rgba(38, 36, 30, .08);
+        padding: 60px 28px 56px;
+      }
+      @media (max-width: 560px) {
+        section { padding-top: 164px; }
+        #services { padding-top: 148px; }
+        #profile { padding-top: 148px; }
+        #contact { padding-top: 184px; }
+        .sec-head { margin-bottom: 64px; }
+        header { padding-top: 60px; }
+        .inquiries { padding-top: 104px; }
+        .inq-row { padding: 28px 4px; }
+        .services li { padding: 44px 2px; }
+        .services li:first-child { padding-top: 44px; }
+        .services li:last-child { padding: 42px 26px 38px; }
+        .sim { margin-top: 88px; padding-top: 56px; }
+        .sim .btn { padding: 12px 36px; }
+        .submit { min-width: 232px; padding: 14px 36px; }
+        .area-band { margin-top: 136px; padding: 108px 20px 100px; }
+        .companion { padding: 48px 20px 44px; }
+        footer { margin-top: 184px; }
+      }
     </style>
   </head>
   <body>
@@ -2061,7 +2160,6 @@
           <p class="hero-corp">株式会社</p>
           <p class="hero-name"><span class="name-whole">森田設備</span></p>
           <span class="hero-line" aria-hidden="true"></span>
-          <p class="hero-area">東海三県（三重・愛知・岐阜）対応</p>
         </div>
         <div class="hero-scroll" aria-hidden="true">
           <span class="s-label">SCROLL</span>
@@ -2222,7 +2320,7 @@
             <span class="num">六</span>
             <div>
               <h3>直結給水化</h3>
-              <p>マンション等の受水槽方式から、水道本管の圧力で直接給水する直結給水方式への切り替え工事。受水槽の清掃・点検といった維持管理の負担軽減につながります。</p>
+              <p>マンション・アパート等の受水槽方式から、水道本管の圧力で直接給水する直結給水方式への切り替え工事。受水槽の清掃・点検といった維持管理の負担軽減につながります。</p>
             </div>
           </li>
         </ul>
@@ -2235,7 +2333,7 @@
           <p class="en">SIMULATOR</p>
           <h3>直結給水化コストシミュレーター</h3>
           <p>
-            マンションの給水方式を受水槽方式から直結給水方式に切り替えた場合の、
+            マンション・アパートなどの給水方式を受水槽方式から直結給水方式に切り替えた場合の、
             工事費と維持費の目安を試算できるシミュレーターをご用意しています。
             建物の階数・戸数などを入力するだけで、その場で概算をご確認いただけます。
           </p>
@@ -2472,7 +2570,7 @@
            through --d; the wide photographs keep their centred
            offset while they rise (see .fade-photo in the styles). */
         var tagGroups = [
-          { sel: 'header .masthead, .inq-head, .inq-row', photo: false },
+          { sel: '.inq-head', photo: false },
           { sel: '.sec-head, .lead, .about-grid, .duo, .world-line', photo: false },
           { sel: '.area-inner > *, .profile .row', photo: false },
           { sel: '.form-intro, form .field, .submit-wrap, .form-note', photo: false },
