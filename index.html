@@ -72,11 +72,33 @@
          and a slight rise, as if a knot were loosening */
       .js .reveal {
         opacity: 0;
-        transform: translateY(26px);
-        filter: blur(5px);
-        transition: opacity 1.7s ease, transform 1.7s cubic-bezier(.22, .61, .36, 1), filter 1.7s ease;
+        transform: translateY(34px) scale(.985);
+        filter: blur(6px);
+        transition: opacity 1.35s ease, transform 1.35s cubic-bezier(.22, .61, .36, 1), filter 1.35s ease;
       }
       .js .reveal.in { opacity: 1; transform: none; filter: none; }
+
+      /* finer pieces inside each chapter — headings, paragraphs,
+         photographs, table rows, form fields — drift up one after
+         another as they reach the eye, so the whole page feels as
+         if it were surfacing gently while it is scrolled.
+         The stagger lives in --d, set by script per sibling group. */
+      .js .fade-item {
+        opacity: 0;
+        transform: translateY(24px);
+        filter: blur(4px);
+        transition:
+          opacity 1.15s ease var(--d, 0s),
+          transform 1.15s cubic-bezier(.22, .61, .36, 1) var(--d, 0s),
+          filter 1.15s ease var(--d, 0s);
+      }
+      .js .fade-item.in { opacity: 1; transform: none; filter: none; }
+      /* the wide photographs are centred with translateX(-50%):
+         their rise keeps that offset, or they would jump sideways */
+      .js .fade-photo {
+        transform: translateX(-50%) translateY(24px);
+      }
+      .js .fade-photo.in { transform: translateX(-50%); }
 
       /* ---------- side vertical text (desktop) ---------- */
       .side {
@@ -408,12 +430,16 @@
         html { scroll-behavior: auto; }
         .hero-frame > img, .hero-scroll .s-line::after, .hero-anko-mascot, .hero-anko-mascot::after { animation: none; }
         .js .reveal { opacity: 1; transform: none; filter: none; transition: none; }
+        .js .fade-item { opacity: 1; transform: none; filter: none; transition: none; }
+        .js .fade-photo { transform: translateX(-50%); }
         .js .hero-mark { animation: none; }
         .js .sec-head .rule { transform: none; transition: none; }
         .intro-veil { display: none; }
       }
       @media print {
         .js .reveal { opacity: 1; transform: none; filter: none; }
+        .js .fade-item { opacity: 1; transform: none; filter: none; }
+        .js .fade-photo { transform: translateX(-50%); }
         .js .hero-mark { animation: none; }
         .js .sec-head .rule { transform: none; }
         .intro-veil { display: none; }
@@ -2440,9 +2466,36 @@
 
     <script>
       (function () {
-        var els = document.querySelectorAll('.reveal');
+        /* finer pieces join the scroll reveal: each is tagged here
+           (not in the markup) so the chapters above stay untouched.
+           Siblings in one group receive a small rising stagger
+           through --d; the wide photographs keep their centred
+           offset while they rise (see .fade-photo in the styles). */
+        var tagGroups = [
+          { sel: 'header .masthead, .inq-head, .inq-row', photo: false },
+          { sel: '.sec-head, .lead, .about-grid, .duo, .world-line', photo: false },
+          { sel: '.area-inner > *, .profile .row', photo: false },
+          { sel: '.form-intro, form .field, .submit-wrap, .form-note', photo: false },
+          { sel: '.anko-corner-lead, .anko-corner .companion, .anko-topics, footer > div', photo: false },
+          { sel: '.site-photo, .svc-photo', photo: true }
+        ];
+        tagGroups.forEach(function (group) {
+          var byParent = {};
+          document.querySelectorAll(group.sel).forEach(function (el) {
+            if (el.classList.contains('reveal') || el.classList.contains('fade-item')) return;
+            el.classList.add('fade-item');
+            if (group.photo) el.classList.add('fade-photo');
+            var key = el.parentNode ? Array.prototype.indexOf.call(document.querySelectorAll('*'), el.parentNode) : 0;
+            byParent[key] = (byParent[key] || 0) + 1;
+            var step = Math.min((byParent[key] - 1) * 0.09, 0.45);
+            el.style.setProperty('--d', step.toFixed(2) + 's');
+          });
+        });
+
+        var els = document.querySelectorAll('.reveal, .fade-item');
         if (!('IntersectionObserver' in window)) {
           for (var i = 0; i < els.length; i++) els[i].classList.add('in');
+          document.body.classList.add('past-opening');
           return;
         }
         var io = new IntersectionObserver(function (entries) {
@@ -2452,12 +2505,12 @@
               io.unobserve(en.target);
             }
           });
-        }, { rootMargin: '0px 0px 12% 0px', threshold: 0.02 });
+        }, { rootMargin: '0px 0px -6% 0px', threshold: 0.04 });
         els.forEach(function (el) { io.observe(el); });
         /* the fixed side furniture joins the page only once the
            white opening has been scrolled past */
         var openingEl = document.getElementById('opening');
-        if (openingEl && 'IntersectionObserver' in window) {
+        if (openingEl) {
           var oio = new IntersectionObserver(function (entries) {
             document.body.classList.toggle('past-opening', !entries[0].isIntersecting);
           }, { threshold: 0.12 });
@@ -2465,10 +2518,17 @@
         } else {
           document.body.classList.add('past-opening');
         }
-        /* safety: never leave content hidden */
+        /* safety: never leave content hidden — but only settle what
+           has already reached the eye. Revealing everything at once
+           (as an earlier version did after a few seconds) spent the
+           whole effect before the visitor ever scrolled to it. */
         setTimeout(function () {
-          els.forEach(function (el) { el.classList.add('in'); });
-        }, 3500);
+          els.forEach(function (el) {
+            if (el.classList.contains('in')) return;
+            var r = el.getBoundingClientRect();
+            if (r.top < window.innerHeight && r.bottom > -80) el.classList.add('in');
+          });
+        }, 4000);
       })();
     </script>
 
